@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Details</title>
+  </head>
+  <body>
+    <h1>User Details</h1>
+    <p>Select a resource and enter a user ID or email:</p>
+    <div>
+      <label for="resource">Resource:</label>
+      <select id="resource">
+        <option value="posts">Posts</option>
+        <option value="comments">Comments</option>
+        <option value="todos">Todos</option>
+        <option value="albums">Albums</option>
+      </select>
+    </div>
+    <div>
+      <label for="user-id">User ID or Email:</label>
+      <input type="text" id="user-id" />
+    </div>
+    <div>
+      <button id="view-button">View</button>
+    </div>
+    <script>
+      const viewButton = document.querySelector('#view-button');
+      viewButton.addEventListener('click', () => {
+        const resource = document.querySelector('#resource').value;
+        const userId = document.querySelector('#user-id').value;
+        if (!userId) {
+          console.error('User ID or email not provided');
+          return;
+        }
+        if (resource === "comments") {
+          const url = `https://jsonplaceholder.typicode.com/comments?email=${userId}`;
+          window.location.href = url;
+        } else {
+          const url = `https://jsonplaceholder.typicode.com/${resource}?userId=${userId}`;
+          window.location.href = url;
+        }
+      });
+    </script>
+  </body>
+</html>

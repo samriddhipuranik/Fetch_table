@@ -1,0 +1,62 @@
+import ActionData from './Action.js';
+const tableBody = document.getElementById('table-body');
+
+fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(user => {
+            const { id, name, username, email, address, phone, website, company } = user;
+            const row = document.createElement('tr');
+            const idCell = document.createElement('td');
+            const companyCell = document.createElement('td');
+            const nameCell = document.createElement('td');
+            const detailsCell = document.createElement('td');
+            const actionCell = document.createElement('td');
+            const accordion = document.createElement('div');
+            const accordionButton = document.createElement('button');
+            const accordionContent = document.createElement('div');
+
+            idCell.textContent = id;
+            companyCell.textContent = company.name;
+            nameCell.textContent = name;
+            detailsCell.innerHTML = `Name: ${name}<br>
+                               Username: ${username}<br>
+                               Email: ${email} <br>
+                               Street: ${address.street} <br> 
+                               Suit:  ${address.suite}<br>
+                               City: ${address.city}<br>
+                               Zip Code:  ${address.zipcode}<br>
+                               Latitude: ${address.geo.lat}<br>
+                               Longitude: ${address.geo.lng}<br>
+                               Phone: ${phone} <br> 
+                               Website: <a href="${website}">${website}</a><br>
+                               Catch Phrase: ${company.catchPhrase}<br>
+                               bs: ${company.bs}
+                              `;
+            accordion.classList.add('accordion');
+            accordionButton.classList.add('accordion-button');
+            accordionButton.type = 'button';
+            accordionButton.setAttribute('data-bs-toggle', 'collapse');
+            accordionButton.setAttribute('data-bs-target', `#collapse-${id}`);
+            accordionButton.setAttribute('aria-expanded', 'false');
+            accordionButton.setAttribute('aria-controls', `collapse-${id}`);
+            accordionButton.textContent = 'Action';
+
+            accordionContent.classList.add('collapse');
+            accordionContent.setAttribute('id', `collapse-${id}`);
+            accordionContent.setAttribute('data-bs-parent', '#accordion');
+            accordionContent.innerHTML = `<p>Some action you can perform on ${name}.</p>`;
+
+            accordion.appendChild(accordionButton);
+            accordion.appendChild(accordionContent);
+            actionCell.appendChild(accordion);
+
+            row.appendChild(idCell);
+            row.appendChild(companyCell);
+            row.appendChild(nameCell);
+            row.appendChild(detailsCell);
+            row.appendChild(actionCell);
+
+            tableBody.appendChild(row);
+        });
+    });

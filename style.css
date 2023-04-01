@@ -1,0 +1,18 @@
+/* main css file  */
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+  }
+  th {
+    background-color: rgb(187, 232, 246);
+  }
+  td.actions {
+    white-space: nowrap;
+  }
+  .details {
+    display: none;
+  }
+  .details.active {
+    display: block;
+  }
